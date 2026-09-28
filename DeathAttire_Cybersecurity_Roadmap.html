@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DeathAttire // Cybersecurity Roadmap</title>
+<style>
+:root{--bg:#090b10;--panel:#11151d;--panel2:#171c26;--text:#edf2f7;--muted:#9ba7b7;--accent:#67e8a5;--line:#26303d;--warn:#ffd166}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 system-ui,-apple-system,Segoe UI,sans-serif}
+header{padding:48px 6vw 34px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#0b1115,#101721)}
+h1{margin:0;font-size:clamp(30px,5vw,58px);letter-spacing:-2px}h2{margin-top:0}h3{margin-bottom:7px}
+.accent{color:var(--accent)}.sub{max-width:850px;color:var(--muted);font-size:17px}
+nav{position:sticky;top:0;z-index:5;background:#0b0e14ee;backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:10px 6vw;display:flex;gap:8px;overflow:auto}
+nav a{color:var(--muted);text-decoration:none;white-space:nowrap;padding:6px 10px;border-radius:7px}nav a:hover{background:var(--panel2);color:var(--text)}
+main{max-width:1150px;margin:auto;padding:30px 6vw 70px}.hero,.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;margin:18px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}.phase{border-left:4px solid var(--accent);padding:18px;background:var(--panel);border-radius:10px}
+.badge{display:inline-block;border:1px solid var(--line);color:var(--muted);border-radius:99px;padding:2px 9px;font-size:12px;margin:2px}
+ul{padding-left:22px}.check{display:flex;gap:9px;margin:7px 0}.check input{accent-color:var(--accent)}
+a{color:#8ee9ff}.source{display:block;margin:8px 0}.source small{color:var(--muted)}
+details{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px 15px;margin:9px 0}summary{cursor:pointer;font-weight:700}
+.note{color:var(--muted)}.warn{border-left:4px solid var(--warn);padding:12px 15px;background:#17150f}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
+.progress{height:9px;background:#202733;border-radius:99px;overflow:hidden}.bar{height:100%;width:0;background:var(--accent);transition:.25s}
+button{background:var(--accent);border:0;border-radius:8px;padding:8px 12px;font-weight:700;cursor:pointer}
+footer{border-top:1px solid var(--line);padding:25px 6vw;color:var(--muted)}
+</style>
+</head>
+<body>
+<header>
+  <div class="badge">DEATHATTIRE // CYBERSECURITY</div>
+  <h1>Zero → <span class="accent">Cybersecurity</span></h1>
+  <p class="sub">A structured, ground-zero curriculum. Learn how computers work before security, practice only in authorized labs, build projects, then choose a specialization.</p>
+</header>
+<nav>
+<a href="#start">Start</a><a href="#roadmap">Roadmap</a><a href="#labs">Labs</a><a href="#specialize">Specialize</a><a href="#projects">Projects</a><a href="#sources">Library</a><a href="#rules">Rules</a>
+</nav>
+<main>
+<section id="start" class="hero">
+<h2>How to use this roadmap</h2>
+<p><b>Rule:</b> do not rush to “hacking tools.” Your foundation is the skill that makes every security tool understandable.</p>
+<div class="grid">
+<div><b>Study</b><br><span class="note">Learn the concept and vocabulary.</span></div>
+<div><b>Practice</b><br><span class="note">Use a legal sandbox or your own lab.</span></div>
+<div><b>Build</b><br><span class="note">Create something that proves the skill.</span></div>
+<div><b>Document</b><br><span class="note">Keep notes, screenshots, commands and lessons learned.</span></div>
+</div>
+<p class="note">Suggested rhythm: 60–90 minutes/day, 5 days/week. Slow and consistent beats trying to finish everything at once.</p>
+</section>
+
+<section id="roadmap">
+<h2>Core Roadmap</h2>
+<div class="progress"><div class="bar" id="bar"></div></div>
+<p id="pct" class="note">0% complete</p>
+
+<div class="phase"><h3>PHASE 0 — Computer Fundamentals</h3><span class="badge">~2–4 weeks</span>
+<p>Goal: understand what a computer actually does.</p>
+<div class="check"><input type=checkbox> Hardware: CPU, RAM, storage, motherboard, GPU, peripherals</div>
+<div class="check"><input type=checkbox> Binary, hexadecimal, bits/bytes, files and processes</div>
+<div class="check"><input type=checkbox> Operating systems, kernels, applications, drivers</div>
+<div class="check"><input type=checkbox> Filesystems, permissions, users and processes</div>
+<div class="check"><input type=checkbox> Virtualization and virtual machines</div>
+<p><b>Checkpoint:</b> explain what happens from pressing a power button to opening a web page.</p>
+</div>
+
+<div class="phase"><h3>PHASE 1 — Networking</h3><span class="badge">~3–6 weeks</span>
+<p>Goal: understand how machines communicate.</p>
+<div class="check"><input type=checkbox> OSI and TCP/IP models</div><div class="check"><input type=checkbox> Ethernet, MAC addresses, ARP</div>
+<div class="check"><input type=checkbox> IPv4/IPv6, subnetting, CIDR</div><div class="check"><input type=checkbox> TCP vs UDP, ports and sockets</div>
+<div class="check"><input type=checkbox> DNS, DHCP, HTTP/HTTPS, TLS</div><div class="check"><input type=checkbox> NAT, routing, firewalls, VPN concepts</div>
+<div class="check"><input type=checkbox> Read packet captures in Wireshark</div>
+<p><b>Checkpoint:</b> capture a DNS + HTTP/HTTPS conversation in your own lab and explain each major packet.</p>
+</div>
+
+<div class="phase"><h3>PHASE 2 — Linux</h3><span class="badge">~3–5 weeks</span>
+<p>Goal: become comfortable living in a terminal.</p>
+<div class="check"><input type=checkbox> Navigation, files, pipes, redirects and text processing</div><div class="check"><input type=checkbox> Users, groups, permissions and sudo</div>
+<div class="check"><input type=checkbox> Processes, services, logs and package management</div><div class="check"><input type=checkbox> SSH and basic networking commands</div>
+<div class="check"><input type=checkbox> Bash scripting fundamentals</div><div class="check"><input type=checkbox> Complete OverTheWire Bandit</div>
+<p><b>Checkpoint:</b> set up a Linux VM and administer it from the command line without relying on a GUI.</p>
+</div>
+
+<div class="phase"><h3>PHASE 3 — Windows + Active Directory</h3><span class="badge">~3–6 weeks</span>
+<p>Goal: understand the dominant enterprise endpoint environment.</p>
+<div class="check"><input type=checkbox> Windows architecture, users, groups and permissions</div><div class="check"><input type=checkbox> PowerShell basics</div>
+<div class="check"><input type=checkbox> Event Viewer, Windows logs and Defender concepts</div><div class="check"><input type=checkbox> Services, scheduled tasks and registry basics</div>
+<div class="check"><input type=checkbox> Active Directory: domain, DC, OU, GPO, Kerberos, LDAP</div>
+<p><b>Checkpoint:</b> explain how a domain login works and where an administrator would investigate suspicious activity.</p>
+</div>
+
+<div class="phase"><h3>PHASE 4 — Programming + Automation</h3><span class="badge">~4–8 weeks</span>
+<p>Goal: write small programs instead of depending on someone else's tool.</p>
+<div class="check"><input type=checkbox> Python syntax, variables, functions, loops and data structures</div><div class="check"><input type=checkbox> Files, JSON, exceptions and modules</div>
+<div class="check"><input type=checkbox> HTTP requests and APIs</div><div class="check"><input type=checkbox> Regular expressions and parsing</div>
+<div class="check"><input type=checkbox> Git: clone, branch, commit, diff, merge and push</div><div class="check"><input type=checkbox> Build 3 small security-related utilities for your own lab</div>
+<p><b>Checkpoint:</b> read unfamiliar Python and modify it safely.</p>
+</div>
+
+<div class="phase"><h3>PHASE 5 — Security Fundamentals</h3><span class="badge">~3–5 weeks</span>
+<p>Goal: learn the language and models used across security.</p>
+<div class="check"><input type=checkbox> CIA triad, assets, threats, vulnerabilities and risk</div><div class="check"><input type=checkbox> Authentication vs authorization</div>
+<div class="check"><input type=checkbox> Least privilege, defense in depth, zero trust</div><div class="check"><input type=checkbox> Hashing, encryption, digital signatures and PKI</div>
+<div class="check"><input type=checkbox> Vulnerability management and patching</div><div class="check"><input type=checkbox> Logging, monitoring, detection and incident response</div>
+<div class="check"><input type=checkbox> Read NIST CSF 2.0 at a high level</div>
+</div>
+
+<div class="phase"><h3>PHASE 6 — Hands-on Cybersecurity</h3><span class="badge">~6–10 weeks</span>
+<p>Goal: connect theory to controlled practice.</p>
+<div class="check"><input type=checkbox> Complete TryHackMe Pre Security</div><div class="check"><input type=checkbox> Complete TryHackMe Cyber Security 101</div>
+<div class="check"><input type=checkbox> Learn Nmap concepts in authorized labs</div><div class="check"><input type=checkbox> Learn Wireshark packet analysis</div>
+<div class="check"><input type=checkbox> Learn basic vulnerability assessment</div><div class="check"><input type=checkbox> Learn web security fundamentals with PortSwigger labs</div>
+<div class="check"><input type=checkbox> Write a report for every substantial lab</div>
+</div>
+
+<div class="phase"><h3>PHASE 7 — Choose a Specialization</h3><span class="badge">ongoing</span>
+<p>Do not pick based on a job title alone. Try each branch briefly.</p>
+<table><tr><th>Branch</th><th>Core skills</th><th>Next study</th></tr>
+<tr><td>Blue Team / SOC</td><td>Logs, SIEM, detection, Windows, networking, incident response</td><td>TryHackMe SOC Level 1 → detection/IR projects</td></tr>
+<tr><td>Penetration Testing</td><td>Networking, Linux, web, enumeration, scripting, reporting</td><td>TryHackMe Jr Penetration Tester → PortSwigger</td></tr>
+<tr><td>Web/AppSec</td><td>HTTP, JavaScript, SQL, authentication, APIs</td><td>PortSwigger Academy → OWASP WSTG</td></tr>
+<tr><td>Security Engineering</td><td>Networks, systems, cloud, identity, automation</td><td>Security engineering labs → cloud security</td></tr>
+<tr><td>DFIR</td><td>Windows/Linux artifacts, logs, timelines, evidence handling</td><td>Forensics labs → incident-response case reports</td></tr>
+<tr><td>Cloud Security</td><td>IAM, networking, containers, logging, cloud architecture</td><td>Learn one cloud deeply, then secure it</td></tr>
+</table>
+</div>
+</section>
+
+<section id="labs" class="card">
+<h2>Legal Practice Environments</h2>
+<p>Use intentionally vulnerable machines, CTFs, or systems you own/have explicit permission to test. Never scan or attack random public systems.</p>
+<div class="grid">
+<div><h3>TryHackMe</h3><p>Best starting point for guided, browser-based learning.</p><a href="https://tryhackme.com/path/outline/presecurity" target="_blank">Pre Security</a><br><a href="https://tryhackme.com/path/outline/cybersecurity101" target="_blank">Cyber Security 101</a></div>
+<div><h3>OverTheWire</h3><p>Bandit is aimed at absolute beginners and teaches command-line fundamentals.</p><a href="https://overthewire.org/wargames/bandit/" target="_blank">Bandit</a></div>
+<div><h3>PortSwigger</h3><p>Free interactive web-security labs.</p><a href="https://portswigger.net/web-security" target="_blank">Web Security Academy</a></div>
+</div>
+</section>
+
+<section id="projects" class="card">
+<h2>Portfolio Projects</h2>
+<ol>
+<li><b>Home lab diagram:</b> document your VMs, network segments, services and purpose.</li>
+<li><b>Packet-analysis report:</b> investigate a provided/sample capture and explain the traffic.</li>
+<li><b>Linux hardening report:</b> configure a lab Linux system and document security changes.</li>
+<li><b>Windows investigation:</b> analyze logs from a controlled scenario and write a timeline.</li>
+<li><b>Web-security report:</b> complete PortSwigger labs and explain the vulnerability, impact and remediation.</li>
+<li><b>Python automation:</b> build a benign log parser, IOC formatter, or lab inventory tool.</li>
+<li><b>Capstone:</b> build a small isolated enterprise-style lab and produce an assessment + remediation report.</li>
+</ol>
+</section>
+
+<section id="sources" class="card">
+<h2>Reference Library</h2>
+<p class="note">These are the places to return to when you don't know something. You do not need to memorize everything.</p>
+<div class="grid">
+<div><h3>Foundations</h3>
+<a class=source href="https://tryhackme.com/path/outline/presecurity" target="_blank">TryHackMe Pre Security</a>
+<a class=source href="https://tryhackme.com/path/outline/cybersecurity101" target="_blank">TryHackMe Cyber Security 101</a>
+<a class=source href="https://learn.microsoft.com/en-us/windows/security/" target="_blank">Microsoft Windows Security</a>
+</div>
+<div><h3>Programming & Tools</h3>
+<a class=source href="https://docs.python.org/3/tutorial/" target="_blank">Python Documentation</a>
+<a class=source href="https://git-scm.com/book/en/v2" target="_blank">Pro Git Book</a>
+<a class=source href="https://www.wireshark.org/docs/wsug_html/" target="_blank">Wireshark User's Guide</a>
+</div>
+<div><h3>Web Security</h3>
+<a class=source href="https://portswigger.net/web-security" target="_blank">PortSwigger Web Security Academy</a>
+<a class=source href="https://owasp.org/projects/web-security-testing-guide" target="_blank">OWASP WSTG</a>
+<a class=source href="https://owasp.org/projects/Top-Ten" target="_blank">OWASP Top 10</a>
+</div>
+<div><h3>Professional References</h3>
+<a class=source href="https://www.nist.gov/cyberframework" target="_blank">NIST Cybersecurity Framework</a>
+<a class=source href="https://tryhackme.com/hacktivities" target="_blank">TryHackMe Learning Roadmap</a>
+<a class=source href="https://academy.hackthebox.com/" target="_blank">Hack The Box Academy</a>
+</div>
+</div>
+</section>
+
+<section id="rules" class="card">
+<h2>Ethics & Safety</h2>
+<div class="warn"><b>Practice boundary:</b> only test systems when you own them or have explicit authorization. The roadmap teaches security skills in controlled environments; it is not permission to access someone else's account, device, network, or website.</div>
+<ul>
+<li>Use CTFs, training labs, local VMs and intentionally vulnerable targets.</li>
+<li>Keep personal accounts and real-world targets out of experiments.</li>
+<li>When learning a technique, learn the defensive side and remediation too.</li>
+<li>Keep a lab journal: objective → environment → observations → evidence → conclusion → fix.</li>
+</ul>
+</section>
+
+<section class="card">
+<h2>Your first 7 days</h2>
+<table>
+<tr><th>Day</th><th>Task</th></tr>
+<tr><td>1</td><td>Learn CPU/RAM/storage, processes, filesystems and OS basics.</td></tr>
+<tr><td>2</td><td>Learn binary/hex and basic command-line navigation.</td></tr>
+<tr><td>3</td><td>Learn IP addresses, MAC addresses, ports and protocols.</td></tr>
+<tr><td>4</td><td>Learn DNS, DHCP, HTTP/HTTPS and TLS at a conceptual level.</td></tr>
+<tr><td>5</td><td>Start TryHackMe Pre Security.</td></tr>
+<tr><td>6</td><td>Set up a safe Linux VM/lab and practice terminal basics.</td></tr>
+<tr><td>7</td><td>Write one page explaining what you learned without copying definitions.</td></tr>
+</table>
+</section>
+</main>
+<footer>DeathAttire Cybersecurity Roadmap • Built as a living curriculum • Verify current documentation before relying on version-specific commands.</footer>
+<script>
+const boxes=[...document.querySelectorAll('input[type=checkbox]')],bar=document.getElementById('bar'),pct=document.getElementById('pct');
+function update(){const n=boxes.filter(x=>x.checked).length,p=Math.round(n/boxes.length*100);bar.style.width=p+'%';pct.textContent=p+'% complete';localStorage.setItem('deathattireRoadmap',JSON.stringify(boxes.map(x=>x.checked)));}
+const saved=JSON.parse(localStorage.getItem('deathattireRoadmap')||'[]');boxes.forEach((x,i)=>{if(saved[i])x.checked=true;x.addEventListener('change',update)});update();
+</script>
+</body>
+</html>
