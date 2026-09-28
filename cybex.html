@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cybex // Cybersecurity Roadmap</title>
+<style>
+:root{
+  --bg:#070a0d;--panel:#0e1411;--panel2:#121a16;--text:#edf8f0;--muted:#91a69a;
+  --line:#1d3025;--accent:#59f28d;--accent2:#25c96a;--glow:rgba(89,242,141,.25);
+  --danger:#ff4d5f;--danger2:#c92f45;--blue:#4ea1ff;--blue2:#286bd8;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 50% -10%,rgba(89,242,141,.08),transparent 36%),var(--bg);color:var(--text);font:15px/1.6 system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh;transition:background .7s ease,color .4s ease}
+body[data-path="red"]{--accent:#ff5266;--accent2:#d92f46;--glow:rgba(255,82,102,.25);--line:#3a2025;--panel:#130d10;--panel2:#1b1115}
+body[data-path="blue"]{--accent:#53a7ff;--accent2:#2878df;--glow:rgba(83,167,255,.25);--line:#1e3044;--panel:#0c121a;--panel2:#111a25}
+body.path-changing:before{content:"";position:fixed;inset:0;z-index:100;pointer-events:none;background:var(--accent);opacity:0;animation:pathFlash .65s ease}
+@keyframes pathFlash{0%{opacity:0}35%{opacity:.16}100%{opacity:0}}
+header{padding:46px 6vw 30px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,rgba(14,22,17,.96),rgba(8,12,16,.94));transition:background .7s}
+body[data-path="red"] header{background:linear-gradient(135deg,rgba(35,11,16,.96),rgba(15,9,12,.94))}
+body[data-path="blue"] header{background:linear-gradient(135deg,rgba(10,22,37,.96),rgba(8,12,18,.94))}
+h1{margin:0;font-size:clamp(30px,5vw,58px);letter-spacing:-2px}
+h2{margin-top:0}h3{margin-bottom:7px}
+.accent{color:var(--accent);transition:color .5s}.sub{max-width:850px;color:var(--muted);font-size:17px}
+.badge{display:inline-block;border:1px solid var(--line);color:var(--muted);border-radius:99px;padding:2px 9px;font-size:12px;margin:2px}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(7,10,13,.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.tabs{max-width:1250px;margin:auto;padding:0 5vw;display:flex;gap:3px;overflow:auto}
+.tab{position:relative;color:var(--muted);background:none;border:0;padding:15px 13px;font:inherit;white-space:nowrap;cursor:pointer}
+.tab:after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:2px;border-radius:9px;background:var(--accent);transform:scaleX(0);box-shadow:0 0 12px var(--accent);transition:transform .35s ease}
+.tab.active{color:var(--text)}.tab.active:after{transform:scaleX(1)}
+.layout{display:flex;min-height:calc(100vh - 130px)}
+.sidebar{width:230px;flex:0 0 230px;border-right:1px solid var(--line);background:rgba(8,12,15,.72);padding:18px 12px;position:sticky;top:72px;height:calc(100vh - 72px);align-self:flex-start;backdrop-filter:blur(12px)}
+.sidebar-title{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);padding:8px 10px 10px}
+.side-link{width:100%;text-align:left;background:transparent;color:var(--muted);border:1px solid transparent;border-radius:9px;padding:10px 11px;margin:2px 0;font:inherit;font-weight:650}
+.side-link:hover{background:var(--panel2);color:var(--text);transform:none}.side-link.active{color:var(--text);border-color:var(--line);background:var(--panel2);box-shadow:inset 3px 0 var(--accent),0 0 14px rgba(0,0,0,.12)}
+.side-profile{margin-top:18px;padding:12px;border:1px solid var(--line);border-radius:11px;background:var(--panel2)}
+.side-avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#06100a;font-weight:900;margin-bottom:9px;overflow:hidden}.side-avatar img{width:100%;height:100%;object-fit:cover}
+.side-name{font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.side-meta{font-size:11px;color:var(--muted);margin-top:2px}
+main{flex:1;min-width:0;max-width:1150px;margin:0 auto;padding:30px 6vw 70px}
+.profile-page{max-width:850px}.profile-head{display:flex;gap:20px;align-items:center;padding:20px;border:1px solid var(--line);border-radius:14px;background:var(--panel2);margin-bottom:18px}.profile-avatar{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#06100a;font-size:30px;font-weight:900;overflow:hidden;flex:0 0 auto}.profile-avatar img{width:100%;height:100%;object-fit:cover}.profile-fields{display:grid;gap:12px}.profile-fields label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.profile-fields input{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:9px}.profile-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.secondary{background:transparent;color:var(--muted);border:1px solid var(--line)}
+.section-kicker{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--accent);font-weight:800;margin-bottom:6px}
+.hero,.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;margin:18px 0;box-shadow:0 8px 35px rgba(0,0,0,.12)}
+.tab-panel{display:none;animation:panelIn .38s ease}.tab-panel.active{display:block}
+@keyframes panelIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.grid,.course-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.phase{border-left:4px solid var(--accent);padding:18px;background:var(--panel);border-radius:10px;margin:14px 0;box-shadow:0 0 0 1px rgba(255,255,255,.01)}
+ul{padding-left:22px}.check{display:flex;gap:9px;margin:7px 0}.check input{accent-color:var(--accent);width:16px;height:16px}
+a{color:#8ee9ff}.source{display:block;margin:8px 0}.note{color:var(--muted)}
+.warn{border-left:4px solid #ffd166;padding:12px 15px;background:#17150f}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
+.progress{height:9px;background:#202733;border-radius:99px;overflow:hidden}.bar{height:100%;width:0;background:var(--accent);transition:.35s;box-shadow:0 0 14px var(--glow)}
+button{background:var(--accent);color:#06100a;border:0;border-radius:8px;padding:8px 12px;font-weight:800;cursor:pointer;transition:.25s}
+button:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.save-status{font-size:12px;color:var(--muted);margin-left:auto}
+.path-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;margin:20px 0}
+.path-card{position:relative;text-align:left;display:flex;flex-direction:column;gap:7px;padding:22px;border:1px solid var(--line);background:var(--panel2);color:var(--text);overflow:hidden}
+.path-card:before{content:"";position:absolute;inset:0;background:var(--accent);opacity:0;transition:.35s}.path-card:hover:before{opacity:.06}
+.path-card.red{--accent:#ff5266}.path-card.blue{--accent:#53a7ff}
+.path-dot{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px var(--accent)}
+.path-card strong,.path-card small{position:relative}.path-card small{color:var(--muted);font-weight:400}
+.course-map{display:none;margin-top:25px}.course-map.active{display:block;animation:panelIn .35s ease}
+.course{padding:17px;border:1px solid var(--line);background:var(--panel2);border-radius:10px;display:flex;flex-direction:column;gap:5px}.course span{color:var(--muted)}
+.syncbox{padding:15px;border:1px dashed var(--line);border-radius:10px;margin-top:15px}
+footer{border-top:1px solid var(--line);padding:25px 6vw;color:var(--muted)}
+@media(max-width:850px){.sidebar{width:190px;flex-basis:190px}}
+@media(max-width:700px){.layout{display:block}.sidebar{position:static;width:auto;height:auto;border-right:0;border-bottom:1px solid var(--line);display:flex;gap:5px;overflow:auto;padding:8px}.sidebar-title{display:none}.side-link{white-space:nowrap;width:auto}.side-profile{display:none}.path-grid{grid-template-columns:1fr}.tabs{padding:0 2vw}.tab{padding:13px 9px}.profile-head{align-items:flex-start}}
+</style>
+</head>
+<body data-path="green">
+<header>
+  <div class="badge">CYBEX // CYBERSECURITY</div>
+  <h1>Zero → <span class="accent">Cybersecurity</span></h1>
+  <p class="sub">A structured, ground-zero curriculum. Learn the foundations, practice safely, build projects, then specialize.</p>
+</header>
+
+<div class="topbar">
+  <div class="tabs" role="tablist">
+    <button class="tab active" data-tab="start">Start</button>
+    <button class="tab" data-tab="roadmap">Standard Roadmap</button>
+    <button class="tab" data-tab="specialize">Paths</button>
+    <button class="tab" data-tab="labs">Labs</button>
+    <button class="tab" data-tab="projects">Projects</button>
+    <button class="tab" data-tab="sources">Library</button>
+    <button class="tab" data-tab="rules">Rules</button>
+  </div>
+</div>
+
+<div class="layout">
+<aside class="sidebar">
+  <div class="sidebar-title">Workspace</div>
+  <button class="side-link active" data-side="profile">Profile</button>
+  <button class="side-link" data-side="settings">Settings</button>
+  <button class="side-link" data-side="appearance">Appearance</button>
+  <button class="side-link" data-side="account">Account</button>
+  <div class="side-profile">
+    <div class="side-avatar" id="sideAvatar">G</div>
+    <div class="side-name" id="sideName">Guest</div>
+    <div class="side-meta">Local profile</div>
+  </div>
+</aside>
+
+<main>
+
+<section id="profile" class="tab-panel card profile-page" data-tab="profile">
+<h2>Profile</h2>
+<p class="note">Manage your local roadmap identity and progress. This is separate from the cybersecurity learning paths.</p>
+<div class="profile-head">
+  <div class="profile-avatar" id="profileAvatar">G</div>
+  <div><h2 id="profileDisplayName" style="margin:0">Guest</h2><p class="note" id="profileBioPreview">Cybersecurity learner</p></div>
+</div>
+<div class="profile-fields">
+  <div><label for="profileName">Display name</label><input id="profileName" value="Guest" maxlength="32"></div>
+  <div><label for="profileBio">Bio</label><input id="profileBio" value="Cybersecurity learner" maxlength="80"></div>
+  <div><label for="profilePfp">Profile picture URL</label><input id="profilePfp" placeholder="https://..." maxlength="500"></div>
+</div>
+<div class="profile-actions">
+  <button id="saveProfile">Save Profile</button>
+  <button id="newProfile" class="secondary">New Profile</button>
+  <button id="exportBtn" class="secondary">Export Progress</button>
+  <button id="importBtn" class="secondary">Import Progress</button>
+  <input id="importFile" type="file" accept="application/json" hidden>
+</div>
+<p id="saveStatus" class="save-status">Saved locally</p>
+</section>
+
+<section id="settings" class="tab-panel card" data-tab="settings"><h2>Settings</h2><p class="note">Future settings will live here. The sidebar is designed to expand as the site grows.</p></section>
+<section id="appearance" class="tab-panel card" data-tab="appearance"><h2>Appearance</h2><p class="note">Future appearance controls will live here. Course themes remain controlled by the selected learning path.</p></section>
+<section id="account" class="tab-panel card" data-tab="account"><h2>Account</h2><p class="note">This site currently uses local browser profiles. Online accounts and cross-device syncing can be added later with authentication and a database.</p></section>
+
+<section id="start" class="tab-panel hero" data-tab="start">
+<h2>How to use this roadmap</h2>
+<p><b>Rule:</b> do not rush to “hacking tools.” Your foundation is the skill that makes every security tool understandable.</p>
+<div class="grid">
+<div><b>Study</b><br><span class="note">Learn the concept and vocabulary.</span></div>
+<div><b>Practice</b><br><span class="note">Use a legal sandbox or your own lab.</span></div>
+<div><b>Build</b><br><span class="note">Create something that proves the skill.</span></div>
+<div><b>Document</b><br><span class="note">Keep notes, screenshots, commands and lessons learned.</span></div>
+</div>
+<p class="note">Suggested rhythm: 60–90 minutes/day, 5 days/week. Slow and consistent beats trying to finish everything at once.</p>
+</section>
+
+<section id="roadmap" class="tab-panel" data-tab="roadmap">
+<h2>Standard Roadmap</h2>
+<div class="progress"><div class="bar" id="bar"></div></div>
+<p id="pct" class="note">0% complete</p>
+
+<div class="phase"><h3>PHASE 0 — Computer Fundamentals</h3><span class="badge">~2–4 weeks</span>
+<p>Goal: understand what a computer actually does.</p>
+<div class="check"><input type=checkbox> Hardware: CPU, RAM, storage, motherboard, GPU, peripherals</div>
+<div class="check"><input type=checkbox> Binary, hexadecimal, bits/bytes, files and processes</div>
+<div class="check"><input type=checkbox> Operating systems, kernels, applications, drivers</div>
+<div class="check"><input type=checkbox> Filesystems, permissions, users and processes</div>
+<div class="check"><input type=checkbox> Virtualization and virtual machines</div>
+<p><b>Checkpoint:</b> explain what happens from pressing a power button to opening a web page.</p>
+</div>
+
+<div class="phase"><h3>PHASE 1 — Networking</h3><span class="badge">~3–6 weeks</span>
+<p>Goal: understand how machines communicate.</p>
+<div class="check"><input type=checkbox> OSI and TCP/IP models</div><div class="check"><input type=checkbox> Ethernet, MAC addresses, ARP</div>
+<div class="check"><input type=checkbox> IPv4/IPv6, subnetting, CIDR</div><div class="check"><input type=checkbox> TCP vs UDP, ports and sockets</div>
+<div class="check"><input type=checkbox> DNS, DHCP, HTTP/HTTPS, TLS</div><div class="check"><input type=checkbox> NAT, routing, firewalls, VPN concepts</div>
+<div class="check"><input type=checkbox> Read packet captures in Wireshark</div>
+<p><b>Checkpoint:</b> capture a DNS + HTTP/HTTPS conversation in your own lab and explain each major packet.</p>
+</div>
+
+<div class="phase"><h3>PHASE 2 — Linux</h3><span class="badge">~3–5 weeks</span>
+<p>Goal: become comfortable living in a terminal.</p>
+<div class="check"><input type=checkbox> Navigation, files, pipes, redirects and text processing</div><div class="check"><input type=checkbox> Users, groups, permissions and sudo</div>
+<div class="check"><input type=checkbox> Processes, services, logs and package management</div><div class="check"><input type=checkbox> SSH and basic networking commands</div>
+<div class="check"><input type=checkbox> Bash scripting fundamentals</div><div class="check"><input type=checkbox> Complete OverTheWire Bandit</div>
+<p><b>Checkpoint:</b> set up a Linux VM and administer it from the command line without relying on a GUI.</p>
+</div>
+
+<div class="phase"><h3>PHASE 3 — Windows + Active Directory</h3><span class="badge">~3–6 weeks</span>
+<p>Goal: understand the dominant enterprise endpoint environment.</p>
+<div class="check"><input type=checkbox> Windows architecture, users, groups and permissions</div><div class="check"><input type=checkbox> PowerShell basics</div>
+<div class="check"><input type=checkbox> Event Viewer, Windows logs and Defender concepts</div><div class="check"><input type=checkbox> Services, scheduled tasks and registry basics</div>
+<div class="check"><input type=checkbox> Active Directory: domain, DC, OU, GPO, Kerberos, LDAP</div>
+<p><b>Checkpoint:</b> explain how a domain login works and where an administrator would investigate suspicious activity.</p>
+</div>
+
+<div class="phase"><h3>PHASE 4 — Programming + Automation</h3><span class="badge">~4–8 weeks</span>
+<p>Goal: write small programs instead of depending on someone else's tool.</p>
+<div class="check"><input type=checkbox> Python syntax, variables, functions, loops and data structures</div><div class="check"><input type=checkbox> Files, JSON, exceptions and modules</div>
+<div class="check"><input type=checkbox> HTTP requests and APIs</div><div class="check"><input type=checkbox> Regular expressions and parsing</div>
+<div class="check"><input type=checkbox> Git: clone, branch, commit, diff, merge and push</div><div class="check"><input type=checkbox> Build 3 small security-related utilities for your own lab</div>
+<p><b>Checkpoint:</b> read unfamiliar Python and modify it safely.</p>
+</div>
+
+<div class="phase"><h3>PHASE 5 — Security Fundamentals</h3><span class="badge">~3–5 weeks</span>
+<p>Goal: learn the language and models used across security.</p>
+<div class="check"><input type=checkbox> CIA triad, assets, threats, vulnerabilities and risk</div><div class="check"><input type=checkbox> Authentication vs authorization</div>
+<div class="check"><input type=checkbox> Least privilege, defense in depth, zero trust</div><div class="check"><input type=checkbox> Hashing, encryption, digital signatures and PKI</div>
+<div class="check"><input type=checkbox> Vulnerability management and patching</div><div class="check"><input type=checkbox> Logging, monitoring, detection and incident response</div>
+<div class="check"><input type=checkbox> Read NIST CSF 2.0 at a high level</div>
+</div>
+
+<div class="phase"><h3>PHASE 6 — Hands-on Cybersecurity</h3><span class="badge">~6–10 weeks</span>
+<p>Goal: connect theory to controlled practice.</p>
+<div class="check"><input type=checkbox> Complete TryHackMe Pre Security</div><div class="check"><input type=checkbox> Complete TryHackMe Cyber Security 101</div>
+<div class="check"><input type=checkbox> Learn Nmap concepts in authorized labs</div><div class="check"><input type=checkbox> Learn Wireshark packet analysis</div>
+<div class="check"><input type=checkbox> Learn basic vulnerability assessment</div><div class="check"><input type=checkbox> Learn web security fundamentals with PortSwigger labs</div>
+<div class="check"><input type=checkbox> Write a report for every substantial lab</div>
+</div>
+
+<div class="phase"><h3>PHASE 7 — Choose a Specialization</h3><span class="badge">ongoing</span>
+<p>Do not pick based on a job title alone. Try each branch briefly.</p>
+<table><tr><th>Branch</th><th>Core skills</th><th>Next study</th></tr>
+<tr><td>Blue Team / SOC</td><td>Logs, SIEM, detection, Windows, networking, incident response</td><td>TryHackMe SOC Level 1 → detection/IR projects</td></tr>
+<tr><td>Penetration Testing</td><td>Networking, Linux, web, enumeration, scripting, reporting</td><td>TryHackMe Jr Penetration Tester → PortSwigger</td></tr>
+<tr><td>Web/AppSec</td><td>HTTP, JavaScript, SQL, authentication, APIs</td><td>PortSwigger Academy → OWASP WSTG</td></tr>
+<tr><td>Security Engineering</td><td>Networks, systems, cloud, identity, automation</td><td>Security engineering labs → cloud security</td></tr>
+<tr><td>DFIR</td><td>Windows/Linux artifacts, logs, timelines, evidence handling</td><td>Forensics labs → incident-response case reports</td></tr>
+<tr><td>Cloud Security</td><td>IAM, networking, containers, logging, cloud architecture</td><td>Learn one cloud deeply, then secure it</td></tr>
+</table>
+</div>
+</section>
+
+<section id="labs" class="tab-panel card" data-tab="labs">
+<h2>Legal Practice Environments</h2>
+<p>Use intentionally vulnerable machines, CTFs, or systems you own/have explicit permission to test. Never scan or attack random public systems.</p>
+<div class="grid">
+<div><h3>TryHackMe</h3><p>Best starting point for guided, browser-based learning.</p><a href="https://tryhackme.com/path/outline/presecurity" target="_blank">Pre Security</a><br><a href="https://tryhackme.com/path/outline/cybersecurity101" target="_blank">Cyber Security 101</a></div>
+<div><h3>OverTheWire</h3><p>Bandit is aimed at absolute beginners and teaches command-line fundamentals.</p><a href="https://overthewire.org/wargames/bandit/" target="_blank">Bandit</a></div>
+<div><h3>PortSwigger</h3><p>Free interactive web-security labs.</p><a href="https://portswigger.net/web-security" target="_blank">Web Security Academy</a></div>
+</div>
+</section>
+
+
+<section id="specialize" class="tab-panel card" data-tab="specialize">
+  <div class="section-kicker">SPECIALIZATION</div>
+  <h2>Choose your path</h2>
+  <p class="note">Pick a direction to load a dedicated color theme and course map. You can switch paths at any time.</p>
+  <div class="path-grid">
+    <button class="path-card red" data-path="red">
+      <span class="path-dot"></span><strong>RED TEAM</strong>
+      <small>Offensive security, web testing, enumeration, reporting and authorized labs.</small>
+    </button>
+    <button class="path-card blue" data-path="blue">
+      <span class="path-dot"></span><strong>BLUE TEAM</strong>
+      <small>Defensive security, SOC work, detection, logs, incident response and hardening.</small>
+    </button>
+  </div>
+
+  <div id="red-course" class="course-map">
+    <h3>RED TEAM COURSE MAP</h3>
+    <div class="course-grid">
+      <div class="course"><b>01 — Recon & Networking</b><span>Networking, HTTP, DNS, ports, services and lab enumeration.</span></div>
+      <div class="course"><b>02 — Linux & Tooling</b><span>Shell fundamentals, filesystems, permissions and safe tool usage.</span></div>
+      <div class="course"><b>03 — Web Security</b><span>Requests, authentication, access control and PortSwigger labs.</span></div>
+      <div class="course"><b>04 — Scripting</b><span>Python, parsing, automation and small lab utilities.</span></div>
+      <div class="course"><b>05 — Assessment</b><span>Evidence, reproducibility, remediation and professional reporting.</span></div>
+    </div>
+  </div>
+
+  <div id="blue-course" class="course-map">
+    <h3>BLUE TEAM COURSE MAP</h3>
+    <div class="course-grid">
+      <div class="course"><b>01 — Systems & Identity</b><span>Windows, Linux, users, permissions, Active Directory and identity.</span></div>
+      <div class="course"><b>02 — Logs & Telemetry</b><span>Windows events, Linux logs, network telemetry and packet analysis.</span></div>
+      <div class="course"><b>03 — Detection Engineering</b><span>Indicators, alert logic, triage and reducing false positives.</span></div>
+      <div class="course"><b>04 — Incident Response</b><span>Containment, investigation, timelines and lessons learned.</span></div>
+      <div class="course"><b>05 — Hardening</b><span>Least privilege, patching, configuration and defense-in-depth.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="tab-panel card" data-tab="projects">
+<h2>Portfolio Projects</h2>
+<ol>
+<li><b>Home lab diagram:</b> document your VMs, network segments, services and purpose.</li>
+<li><b>Packet-analysis report:</b> investigate a provided/sample capture and explain the traffic.</li>
+<li><b>Linux hardening report:</b> configure a lab Linux system and document security changes.</li>
+<li><b>Windows investigation:</b> analyze logs from a controlled scenario and write a timeline.</li>
+<li><b>Web-security report:</b> complete PortSwigger labs and explain the vulnerability, impact and remediation.</li>
+<li><b>Python automation:</b> build a benign log parser, IOC formatter, or lab inventory tool.</li>
+<li><b>Capstone:</b> build a small isolated enterprise-style lab and produce an assessment + remediation report.</li>
+</ol>
+</section>
+
+<section id="sources" class="tab-panel card" data-tab="sources">
+<h2>Reference Library</h2>
+<p class="note">These are the places to return to when you don't know something. You do not need to memorize everything.</p>
+<div class="grid">
+<div><h3>Foundations</h3>
+<a class=source href="https://tryhackme.com/path/outline/presecurity" target="_blank">TryHackMe Pre Security</a>
+<a class=source href="https://tryhackme.com/path/outline/cybersecurity101" target="_blank">TryHackMe Cyber Security 101</a>
+<a class=source href="https://learn.microsoft.com/en-us/windows/security/" target="_blank">Microsoft Windows Security</a>
+</div>
+<div><h3>Programming & Tools</h3>
+<a class=source href="https://docs.python.org/3/tutorial/" target="_blank">Python Documentation</a>
+<a class=source href="https://git-scm.com/book/en/v2" target="_blank">Pro Git Book</a>
+<a class=source href="https://www.wireshark.org/docs/wsug_html/" target="_blank">Wireshark User's Guide</a>
+</div>
+<div><h3>Web Security</h3>
+<a class=source href="https://portswigger.net/web-security" target="_blank">PortSwigger Web Security Academy</a>
+<a class=source href="https://owasp.org/projects/web-security-testing-guide" target="_blank">OWASP WSTG</a>
+<a class=source href="https://owasp.org/projects/Top-Ten" target="_blank">OWASP Top 10</a>
+</div>
+<div><h3>Professional References</h3>
+<a class=source href="https://www.nist.gov/cyberframework" target="_blank">NIST Cybersecurity Framework</a>
+<a class=source href="https://tryhackme.com/hacktivities" target="_blank">TryHackMe Learning Roadmap</a>
+<a class=source href="https://academy.hackthebox.com/" target="_blank">Hack The Box Academy</a>
+</div>
+</div>
+</section>
+
+<section id="rules" class="tab-panel card" data-tab="rules">
+<h2>Cybersecurity Rules & Safety Standards</h2>
+<p class="note">These rules define how this roadmap should be used. Cybersecurity skills are powerful; the goal is to build them responsibly, documentably, and inside environments where you have permission.</p>
+<div class="warn"><b>1. Authorization comes first.</b><br>Only test a computer, account, application, website, API, network, cloud resource, or device when you own it or have explicit permission to test it. “It is publicly accessible” is not the same as “I am authorized to test it.”</div>
+<ul>
+<li><b>Use dedicated practice environments.</b> Prefer CTFs, training platforms, local virtual machines, intentionally vulnerable applications, and systems specifically provided for security testing.</li>
+<li><b>Never use another person's credentials.</b> Do not attempt to access, guess, bypass, steal, reset, or reuse credentials that are not yours or that you were not explicitly authorized to handle.</li>
+<li><b>Do not experiment on real-world targets.</b> Avoid scanning, exploiting, brute-forcing, vulnerability testing, or automated probing against random websites, public IPs, school systems, company systems, game servers, or other networks without written authorization.</li>
+<li><b>Protect data.</b> Do not collect, copy, expose, publish, or retain private information that you encounter during testing. If sensitive data appears in an authorized lab, treat it as sensitive and follow the lab's rules.</li>
+<li><b>Minimize impact.</b> In an authorized environment, use the least disruptive technique necessary. Avoid actions that could delete data, interrupt services, change accounts, damage systems, or create unnecessary traffic.</li>
+<li><b>Keep proof and scope.</b> Before a lab or assessment, record what is in scope, what is out of scope, the allowed time window, and what actions are permitted. Keep notes of commands, observations, and results.</li>
+<li><b>Learn the defensive side.</b> For every offensive technique you study, understand what it does, what evidence it leaves, how defenders can detect it, and how the underlying weakness can be fixed.</li>
+<li><b>Do not bypass safety controls just to “see if it works.”</b> Security training should increase understanding without turning a learning exercise into unauthorized access or real-world harm.</li>
+<li><b>Respect platform rules.</b> Follow the terms, rules, and scope of the lab, CTF, bug-bounty program, school environment, or other service you are using. If a rule is unclear, stop and get clarification before testing.</li>
+<li><b>Report responsibly.</b> If you discover a vulnerability in an authorized environment, document the issue clearly, include reproducible evidence that is safe to share, explain the impact without exaggeration, and use the organization's stated reporting process.</li>
+</ul>
+<div class="syncbox"><b>Simple decision check:</b> Before running a security action, ask: “Do I own this system, or do I have explicit authorization? Is this action inside the allowed scope? Could it expose data or disrupt service?” If any answer is unclear, do not run the action until the scope is confirmed.</div>
+</section>
+
+<section class="card">
+<h2>Your first 7 days</h2>
+<table>
+<tr><th>Day</th><th>Task</th></tr>
+<tr><td>1</td><td>Learn CPU/RAM/storage, processes, filesystems and OS basics.</td></tr>
+<tr><td>2</td><td>Learn binary/hex and basic command-line navigation.</td></tr>
+<tr><td>3</td><td>Learn IP addresses, MAC addresses, ports and protocols.</td></tr>
+<tr><td>4</td><td>Learn DNS, DHCP, HTTP/HTTPS and TLS at a conceptual level.</td></tr>
+<tr><td>5</td><td>Start TryHackMe Pre Security.</td></tr>
+<tr><td>6</td><td>Set up a safe Linux VM/lab and practice terminal basics.</td></tr>
+<tr><td>7</td><td>Write one page explaining what you learned without copying definitions.</td></tr>
+</table>
+</section>
+
+
+<div class="syncbox"><b>Progress storage:</b> your profile and checklist progress are saved locally in this browser. Export/import can move progress between devices.</div>
+</main></div>
+<footer>Cybex Cybersecurity Roadmap • Multi-profile local progress • Built as a living curriculum</footer>
+<script>
+const STORAGE_KEY="cybexCyberV3";
+const state=JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}");
+state.profiles=state.profiles||{};
+state.current=state.current||"Guest";
+
+function getProfile(){
+  if(!state.profiles[state.current]) state.profiles[state.current]={checks:{}};
+  return state.profiles[state.current];
+}
+function save(){
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
+  const el=document.getElementById("saveStatus");
+  if(el) el.textContent="Saved locally • "+new Date().toLocaleTimeString();
+}
+
+// --- Tab / panel switching ---
+function activateTab(tabName){
+  const panel=document.querySelector(`.tab-panel[data-tab="${tabName}"]`);
+  if(!panel) return;
+  document.querySelectorAll(".tab-panel").forEach(p=>p.classList.remove("active"));
+  panel.classList.add("active");
+  document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active", b.dataset.tab===tabName));
+  document.querySelectorAll(".side-link").forEach(b=>b.classList.toggle("active", b.dataset.side===tabName));
+  history.replaceState(null,"","#"+tabName);
+}
+
+// --- Red/Blue path theming ---
+function setPath(path){
+  document.body.classList.add("path-changing");
+  setTimeout(()=>document.body.classList.remove("path-changing"),650);
+  document.body.dataset.path=path;
+  const redMap=document.getElementById("red-course");
+  const blueMap=document.getElementById("blue-course");
+  if(redMap) redMap.classList.toggle("active", path==="red");
+  if(blueMap) blueMap.classList.toggle("active", path==="blue");
+}
+
+// --- Roadmap checklist + progress bar ---
+function getCheckboxes(){
+  return [...document.querySelectorAll("#roadmap .check input[type=checkbox]")];
+}
+function updateProgress(){
+  const boxes=getCheckboxes();
+  const checked=boxes.filter(b=>b.checked).length;
+  const pct=boxes.length?Math.round((checked/boxes.length)*100):0;
+  const bar=document.getElementById("bar");
+  if(bar) bar.style.width=pct+"%";
+  const pctEl=document.getElementById("pct");
+  if(pctEl) pctEl.textContent=pct+"% complete";
+}
+function rebuildChecks(){
+  getCheckboxes().forEach((box,i)=>{
+    box.dataset.idx=i;
+    box.onchange=()=>{
+      const p=getProfile();
+      p.checks[i]=box.checked;
+      save();
+      updateProgress();
+    };
+  });
+}
+function loadChecks(){
+  const p=getProfile();
+  getCheckboxes().forEach((box,i)=>{ box.checked=!!p.checks[i]; });
+  updateProgress();
+}
+
+// --- Profile rendering ---
+function renderProfile(){
+  const p=getProfile();
+  const name=state.current;
+  const bio=p.bio||"Cybersecurity learner";
+  const pfp=p.pfp||"";
+  const initial=(name[0]||"G").toUpperCase();
+  const setAvatar=(el)=>{
+    if(!el) return;
+    el.innerHTML=pfp?`<img src="${pfp}" alt="">`:initial;
+  };
+  setAvatar(document.getElementById("sideAvatar"));
+  setAvatar(document.getElementById("profileAvatar"));
+  const sideName=document.getElementById("sideName"); if(sideName) sideName.textContent=name;
+  const displayName=document.getElementById("profileDisplayName"); if(displayName) displayName.textContent=name;
+  const bioPreview=document.getElementById("profileBioPreview"); if(bioPreview) bioPreview.textContent=bio;
+  const nameInput=document.getElementById("profileName"); if(nameInput) nameInput.value=name;
+  const bioInput=document.getElementById("profileBio"); if(bioInput) bioInput.value=bio;
+  const pfpInput=document.getElementById("profilePfp"); if(pfpInput) pfpInput.value=pfp;
+}
+function switchProfile(name){
+  name=(name||"").trim();
+  if(!name) return;
+  state.current=name;
+  if(!state.profiles[name]) state.profiles[name]={checks:{}};
+  save();
+  renderProfile();
+  loadChecks();
+}
+
+// --- Event bindings (run once) ---
+document.querySelectorAll(".tab").forEach(btn=>btn.addEventListener("click",()=>{
+  activateTab(btn.dataset.tab);
+  if(btn.dataset.tab==="start") setPath("green");
+}));
+document.querySelectorAll(".path-card").forEach(btn=>btn.addEventListener("click",()=>setPath(btn.dataset.path)));
+document.querySelectorAll(".side-link").forEach(btn=>btn.addEventListener("click",()=>activateTab(btn.dataset.side)));
+
+document.getElementById("saveProfile").onclick=()=>{
+  const p=getProfile();
+  p.bio=document.getElementById("profileBio").value.trim()||"Cybersecurity learner";
+  p.pfp=document.getElementById("profilePfp").value.trim();
+  const requested=document.getElementById("profileName").value.trim()||"Guest";
+  if(requested!==state.current){
+    const old=state.current;
+    state.profiles[requested]=state.profiles[old];
+    delete state.profiles[old];
+    state.current=requested;
+  }
+  save();
+  renderProfile();
+};
+document.getElementById("newProfile").onclick=()=>{
+  const n=prompt("Name your new profile:");
+  if(n) switchProfile(n);
+};
+document.getElementById("exportBtn").onclick=()=>{
+  const blob=new Blob([JSON.stringify({profile:state.current,data:getProfile()},null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob),a=document.createElement("a");
+  a.href=url; a.download="cybex-"+state.current.replace(/\W+/g,"-")+".json"; a.click();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+};
+document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();
+document.getElementById("importFile").onchange=async e=>{
+  const f=e.target.files[0];
+  if(!f) return;
+  try{
+    const data=JSON.parse(await f.text());
+    const name=(data.profile||state.current).trim()||"Guest";
+    state.current=name;
+    state.profiles[name]=data.data||{checks:{}};
+    save();
+    renderProfile();
+    loadChecks();
+  }catch{
+    alert("That progress file could not be read.");
+  }
+  e.target.value="";
+};
+
+// --- Init ---
+rebuildChecks();
+loadChecks();
+renderProfile();
+const hash=(location.hash||"#start").slice(1);
+const valid=[...document.querySelectorAll(".tab")].map(x=>x.dataset.tab).concat(["profile","settings","appearance","account"]);
+activateTab(valid.includes(hash)?hash:"start");
+</script>
+</body>
+</html>
